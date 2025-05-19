@@ -3,7 +3,6 @@ import { Avatar } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SchoolIcon from "@mui/icons-material/School";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
@@ -35,20 +34,22 @@ const Header = () => {
     return null;
   }
 
-  const fullName = user.result.name?.trim();
-  const firstName = fullName?.split(" ")[1] || fullName || "Faculty";
+  const fullName = user.result.name?.trim() || "Faculty";
 
   return (
-    <div className="w-full flex justify-between items-center p-4 bg-white dark:bg-gray-900 shadow-md">
+    <div className="w-full flex justify-between items-center p-4 bg-white dark:bg-gray-900 shadow-md rounded-b-xl">
       {/* Logo & Institute Name */}
       <div className="flex items-center gap-3">
-        <SchoolIcon className="text-blue-600" fontSize="large" />
+        {/* Custom colorful circular logo */}
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg select-none">
+          JRS
+        </div>
         <span className="text-xl font-bold text-blue-700">JRS Institute</span>
       </div>
 
       {/* Welcome Message */}
       <div className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
-        Welcome, {firstName}
+        Welcome, {fullName}
       </div>
 
       {/* Dark Mode, Avatar & Logout */}
@@ -63,7 +64,7 @@ const Header = () => {
 
         <Avatar
           src={user.result.avatar || ""}
-          alt={firstName.charAt(0)}
+          alt={fullName.charAt(0)}
           sx={{ width: 36, height: 36 }}
           className="border-2 border-blue-600"
         />
