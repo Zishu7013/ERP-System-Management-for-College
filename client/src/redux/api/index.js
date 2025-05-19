@@ -1,20 +1,20 @@
 import axios from "axios";
 
-// const API = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL });
-const API = axios.create({ baseURL: "http://localhost:5001/" });
+// Backend URL updated to Render deployment URL
+const API = axios.create({ baseURL: "https://erp-system-management-for-college.onrender.com" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("user")) {
-    req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("user")).token
-    }`;
+    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("user")).token
+      }`;
   }
   return req;
 });
 
-// Admin
-
+// Admin APIs
 export const adminSignIn = (formData) => API.post("/api/admin/login", formData);
+// ... baki sab API calls waise hi rahenge
+
 
 export const adminUpdatePassword = (updatedPassword) =>
   API.post("/api/admin/updatepassword", updatedPassword);
