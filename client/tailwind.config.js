@@ -1,6 +1,6 @@
 module.exports = {
   darkMode: 'class', // Dark mode enabled via class
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"], // ✅ updated from 'purge' to 'content'
   theme: {
     extend: {
       animation: {
