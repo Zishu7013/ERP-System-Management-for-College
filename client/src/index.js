@@ -10,6 +10,17 @@ import thunk from "redux-thunk";
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
+// Dark mode initial setup: localStorage se theme padh ke html element pe class lagao
+const setInitialTheme = () => {
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+};
+setInitialTheme();
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

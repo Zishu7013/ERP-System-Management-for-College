@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SchoolIcon from "@mui/icons-material/School";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
@@ -10,7 +11,6 @@ const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -31,39 +31,46 @@ const Header = () => {
     navigate("/login/facultylogin");
   };
 
-  if (!user) {
-    return null; // In case user data is missing
+  if (!user || !user.result) {
+    return null;
   }
 
-  return (
-    <div className="w-full flex justify-between items-center p-4 bg-white dark:bg-gray-900 shadow-md dark:text-white">
-      <div className="text-blue-600 font-bold text-lg">JRS Institute</div>
+  const fullName = user.result.name?.trim();
+  const firstName = fullName?.split(" ")[1] || fullName || "Faculty";
 
-      <div className="text-sm sm:text-base font-semibold">
-        Welcome, {user?.result?.name?.split(" ")[0]}
+  return (
+    <div className="w-full flex justify-between items-center p-4 bg-white dark:bg-gray-900 shadow-md">
+      {/* Logo & Institute Name */}
+      <div className="flex items-center gap-3">
+        <SchoolIcon className="text-blue-600" fontSize="large" />
+        <span className="text-xl font-bold text-blue-700">JRS Institute</span>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <button
-          onClick={toggleDarkMode}
-          className="text-xl hover:scale-110 transition-transform"
-        >
-          {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+      {/* Welcome Message */}
+      <div className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
+        Welcome, {firstName}
+      </div>
+
+      {/* Dark Mode, Avatar & Logout */}
+      <div className="flex items-center gap-4">
+        <button onClick={toggleDarkMode} title="Toggle Theme">
+          {darkMode ? (
+            <LightModeIcon className="text-yellow-400" />
+          ) : (
+            <DarkModeIcon className="text-gray-700" />
+          )}
         </button>
 
         <Avatar
-          src={user.result.avatar}
-          alt={user.result.name.charAt(0)}
-          sx={{ width: 32, height: 32 }}
-          className="border-blue-600 border-2"
+          src={user.result.avatar || ""}
+          alt={firstName.charAt(0)}
+          sx={{ width: 36, height: 36 }}
+          className="border-2 border-blue-600"
         />
-        <span className="hidden sm:block text-sm font-medium">
-          {user?.result?.name?.split(" ")[0]}
-        </span>
 
         <LogoutIcon
           onClick={logout}
-          className="cursor-pointer hover:scale-125 transition-transform"
+          className="cursor-pointer text-red-600 hover:scale-110 transition-transform"
         />
       </div>
     </div>

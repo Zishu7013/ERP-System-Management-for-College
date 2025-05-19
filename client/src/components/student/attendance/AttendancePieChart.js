@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// Light colors for better text visibility
 const COLORS = [
   "#4ade80", // green
   "#facc15", // yellow
@@ -26,7 +27,8 @@ const AttendancePieChart = ({ attendance }) => {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    // Reduce height for smaller chart (e.g. 300px height)
+    <ResponsiveContainer width="100%" height={300}>
       <PieChart>
         <Pie
           data={data}
@@ -34,7 +36,7 @@ const AttendancePieChart = ({ attendance }) => {
           nameKey="name"
           cx="50%"
           cy="50%"
-          outerRadius={130}
+          outerRadius={90}  // reduced from 130 to 90
           label={({ name, value }) => `${name}: ${value}%`}
           labelLine={false}
         >
